@@ -1,14 +1,21 @@
+<script lang="ts">
+export default {
+  name: 'pc-navbar'
+}
+</script>
+
 <script setup lang="ts">
 import { useNavbarStore } from '@/stores'
+import { useAppStore } from '@/stores'
 
-const store = useNavbarStore()
-store.setCategoryData()
+const navbarStore = useNavbarStore()
+navbarStore.setCategoryData()
 
 const isFold = ref(false)
 
-const currentItemIndex = ref(0)
-const onItemClick = (index: number) => {
-  currentItemIndex.value = index
+const appStore = useAppStore()
+const onItemClick = (item: CategoryDataType) => {
+  appStore.currentCategory = item
 }
 </script>
 
@@ -33,13 +40,13 @@ const onItemClick = (index: number) => {
       </div>
       <!-- category item -->
       <li
-        v-for="(item, index) in store.categoryData"
+        v-for="(item, index) in navbarStore.categoryData"
         :key="item.id"
         class="shrink-0 px-1.5 py-0 z-10 duration-200 last:mr-4 text-zinc-900 dark:text-zinc-200 text-base font-bold h-4 leading-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-900 rounded mr-1 mb-1"
-        @click="onItemClick(index)"
+        @click="onItemClick(item)"
         :class="{
           'bg-zinc-200 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-200':
-            currentItemIndex === index
+            appStore.currentCategoryIndex() === index
         }"
       >
         {{ item.name }}

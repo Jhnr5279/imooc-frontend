@@ -2,10 +2,12 @@
 import { useScroll } from '@vueuse/core'
 import MenuVue from '@/views/main/components/menu/index.vue'
 import { useNavbarStore } from '@/stores'
+import { useAppStore } from '@/stores'
 
 // pinia
-const store = useNavbarStore()
-store.setCategoryData()
+const navbarStore = useNavbarStore()
+navbarStore.setCategoryData()
+const appStore = useAppStore()
 
 const sliderRef = ref<HTMLLIElement | null>(null)
 const sliderStyle = ref({
@@ -14,7 +16,6 @@ const sliderStyle = ref({
 })
 
 // 选中的item下标
-const currentInex = ref(0)
 let itemRefs = [] as HTMLLIElement[]
 const setItemsRef = (el: any) => {
   if (el) {
@@ -28,21 +29,24 @@ onBeforeUpdate(() => {
 // 获取 ul 元素，用以计算偏移位置
 const ulTarget = ref<HTMLUListElement | null>(null)
 const { x: ulScrollLeft } = useScroll(ulTarget)
-watch(currentInex, (val) => {
-  const { left, width } = itemRefs[val].getBoundingClientRect()
-  sliderStyle.value = {
-    width: `${width}px`,
-    transform: `translateX(${left + ulScrollLeft.value - 10}px)`
+watch(
+  () => appStore.currentCategoryIndex(),
+  (val) => {
+    const { left, width } = itemRefs[val].getBoundingClientRect()
+    sliderStyle.value = {
+      width: `${width}px`,
+      transform: `translateX(${left + ulScrollLeft.value - 10}px)`
+    }
   }
-})
+)
 
 const showPopup = ref(false)
 const showPopupClick = () => {
   showPopup.value = true
 }
 
-const onItemClick = (index: number) => {
-  currentInex.value = index
+const onItemClick = (item: CategoryDataType) => {
+  appStore.currentCategory = item
   showPopup.value = false
 }
 </script>
@@ -66,12 +70,15 @@ const onItemClick = (index: number) => {
         <m-svg-icon class="w-1.5 h-1.5" name="hamburger"></m-svg-icon>
       </li>
       <li
-        v-for="(item, index) in store.categoryData"
+        v-for="(item, index) in navbarStore.categoryData"
         :key="item.id"
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-4"
-        :class="{ 'text-zinc-100 dark:text-zinc-300': currentInex === index }"
+        :class="{
+          'text-zinc-100 dark:text-zinc-300':
+            appStore.currentCategoryIndex() === index
+        }"
         :ref="setItemsRef"
-        @click="onItemClick(index)"
+        @click="onItemClick(item)"
       >
         {{ item.name }}
       </li>

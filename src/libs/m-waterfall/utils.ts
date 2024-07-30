@@ -40,3 +40,33 @@ export const onComplateImgs = (imgs: string[]) => {
   })
   return Promise.all(promisArr)
 }
+
+/**
+ * 获取所有列中最小的高度
+ */
+export const getMinHeight = (columnHeightObj: Record<number, number>) => {
+  const columnHeightArr = Object.values(columnHeightObj)
+  return Math.min(...columnHeightArr)
+}
+
+/**
+ * 获取最小高度的所在列
+ */
+export const getMinHeightColumn = (
+  columnHeightObj: Record<string, number>
+): number | undefined => {
+  const columnHeight = getMinHeight(columnHeightObj)
+  return Object.keys(columnHeightObj).find((key) => {
+    return columnHeightObj[key] === columnHeight
+  }) as number | undefined
+}
+
+/**
+ * 获取最大高度的所在列
+ */
+export const getMaxHeight = (
+  columnHeightObj: Record<number, number>
+): number => {
+  const maxHeightColumnArr = Object.values(columnHeightObj)
+  return Math.max(...maxHeightColumnArr)
+}

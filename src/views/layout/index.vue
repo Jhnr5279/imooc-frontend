@@ -6,8 +6,9 @@ import MainVue from './components/main.vue'
 
 <template>
   <header-vue class="h-header dark:bg-zinc-900"></header-vue>
-
-  <main-vue class="h-main"> </main-vue>
+  <div class="h-main">
+    <main-vue> </main-vue>
+  </div>
   <floating></floating>
 </template>
 

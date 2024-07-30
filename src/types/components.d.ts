@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     MButton: typeof import('./../libs/m-button/index.vue')['default']
+    MInfinite: typeof import('./../libs/m-infinite/index.vue')['default']
+    MInfinity: typeof import('./../libs/m-infinity/index.vue')['default']
     MPopover: typeof import('./../libs/m-popover/index.vue')['default']
     MPopup: typeof import('./../libs/m-popup/index.vue')['default']
     MSearch: typeof import('./../libs/m-search/index.vue')['default']

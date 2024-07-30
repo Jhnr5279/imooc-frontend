@@ -1,22 +1,36 @@
 <script setup lang="ts">
+import { randomRGB } from '@/utils/color'
+
 defineProps({
   data: {
     type: Object as () => PexelsDataType,
     required: true
   },
   width: {
-    type: String
+    type: Number
   }
 })
+
+const rgb = randomRGB()
 </script>
 
 <template>
-  <div
-    class="bg-white dark:bg-zinc-900 xl:dark:bg-zinc-800 w-[230px] rounded pb-1"
-  >
-    <div class="relative w-full rounded cursor-zoom-in group">
+  <div class="bg-white dark:bg-zinc-900 xl:dark:bg-zinc-800 rounded pb-1">
+    <div
+      class="relative w-full rounded cursor-zoom-in group duration-200"
+      :style="{ backgroundColor: rgb }"
+    >
       <!-- 图片 -->
-      <img class="rounded w-full bg-transparent" :src="data.photo" />
+      <img
+        v-lazy
+        class="rounded w-full bg-transparent"
+        :src="data.photo"
+        :style="{
+          height: width
+            ? (width / data.photoWidth) * data.photoHeight + 'px'
+            : ''
+        }"
+      />
       <!-- 遮罩层 -->
       <div
         class="hidden opacity-0 w-full h-full bg-zinc-900/50 absolute top-0 left-0 rounded duration-300 group-hover:opacity-100 xl:block"
@@ -52,7 +66,7 @@ defineProps({
     </p>
     <!-- 作者信息 -->
     <div class="flex items-center mt-1 px-1">
-      <img class="h-2 w-2 rounded-full" :src="data.avatar" alt="" />
+      <img v-lazy class="h-2 w-2 rounded-full" :src="data.avatar" alt="" />
       <span class="text-sm text-zinc-500 ml-1">{{ data.author }}</span>
     </div>
   </div>

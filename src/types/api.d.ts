@@ -23,7 +23,6 @@ declare interface PexelsListApiType {
 }
 
 declare interface PexelsDataType extends Record<string, string | number> {
-
   _id: string
   photoLink: string
   photo: string
@@ -38,8 +37,7 @@ declare interface PexelsDataType extends Record<string, string | number> {
   photoType: string
   __v: number
   _style?: {
-    top: string
-    left: string
+    top: number | string
+    left: number | string
   }
-
 }

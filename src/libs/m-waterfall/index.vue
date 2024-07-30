@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { getImgElements, getImgSrcs, onComplateImgs } from './utils'
+import {
+  getImgElements,
+  getImgSrcs,
+  getMaxHeight,
+  getMinHeight,
+  getMinHeightColumn,
+  onComplateImgs
+} from './utils'
 
 const props = defineProps({
   data: {
@@ -29,16 +36,16 @@ const props = defineProps({
 })
 
 // 容器总高度
-const containerHeight = ref(400)
+const containerHeight = ref(0)
 // 记录每列高度的容器。key:所在列 value:列高
-const containerHeightObj = ref([{}])
+const columnHeightObj = ref<Record<number, number>>({})
 /**
  *  构建记录各列的高度的对象
  */
 const useColumnHeightObj = () => {
-  containerHeightObj.value = [{}]
+  columnHeightObj.value = {}
   for (let i = 0; i < props.column; i++) {
-    containerHeightObj.value[i] = 0
+    columnHeightObj.value[i] = 0
   }
 }
 
@@ -131,14 +138,55 @@ const useItemHeight = () => {
   useItemLocation()
 }
 
+/**
+ * 渲染位置
+ */
 const useItemLocation = () => {
-  console.log(itemHeights)
+  props.data.forEach((item, index) => {
+    // 防止重复计算
+    if (item._style) return
+    item._style = {} as { left: number; top: number }
+    item._style.left = getItemLeft()
+    item._style.top = getItemTop()
+    increasingHeight(index)
+  })
+  // 将最大高度列 设置给容器高度
+  containerHeight.value = getMaxHeight(columnHeightObj.value)
+}
+/**
+ * 获取下一个 item 的左边距离
+ */
+const getItemLeft = () => {
+  const column = getMinHeightColumn(columnHeightObj.value)!
+  return (
+    column * (columnWidth.value + props.columnSpacing) + containerLeft.value
+  )
+}
+/**
+ * 获取下一个 item 高度
+ */
+const getItemTop = () => {
+  return getMinHeight(columnHeightObj.value)
+}
+
+/**
+ * 递增高度
+ */
+const increasingHeight = (index: number) => {
+  const minHeightColumn = getMinHeightColumn(columnHeightObj.value)!
+  columnHeightObj.value[minHeightColumn] +=
+    itemHeights[index] + props.rowSpacing
 }
 
 watch(
   () => props.data,
   (newVal) => {
     nextTick(() => {
+      const resetColumnHeight = newVal.every((item) => !item._style)
+      if (resetColumnHeight) {
+        // 构建高度记录
+        useColumnHeightObj()
+      }
       if (props.picturePreReading) {
         waitImgComplate()
       } else {
@@ -147,6 +195,32 @@ watch(
     })
   },
   { deep: true, immediate: true }
+)
+
+const reset = () => {
+  setTimeout(() => {
+    useColumnWidth()
+    props.data.forEach((item) => {
+      item._style = undefined
+    })
+  }, 200)
+}
+
+watch(
+  () => props.column,
+  () => {
+    if (props.picturePreReading) {
+      columnWidth.value = 0
+    }
+    reset()
+
+    // nextTick(() => {
+    //   useColumnWidth()
+    //   props.data.forEach((item) => {
+    //     item._style = undefined
+    //   })
+    // })
+  }
 )
 </script>
 
@@ -173,7 +247,7 @@ watch(
         <slot :item="item" :width="columnWidth" :index="index" />
       </div>
     </template>
-    <div v-else>Loading...</div>
+    <div v-else></div>
   </div>
 </template>
 
