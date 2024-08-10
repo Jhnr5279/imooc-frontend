@@ -29,7 +29,7 @@ const setIconName = (type: THEME_TYPE) => {
 </script>
 
 <template>
-  <m-popover placement="bottom-left">
+  <m-popover placement="bottom-left" class="guide-theme">
     <template #reference>
       <m-svg-icon
         :name="store.iconName"

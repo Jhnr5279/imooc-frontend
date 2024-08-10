@@ -5,11 +5,13 @@ import MainVue from './components/main.vue'
 </script>
 
 <template>
-  <header-vue class="h-header dark:bg-zinc-900"></header-vue>
-  <div class="h-main">
-    <main-vue> </main-vue>
+  <div class="h-screen">
+    <header-vue class="h-header dark:bg-zinc-900"></header-vue>
+    <div class="h-main">
+      <main-vue> </main-vue>
+    </div>
+    <floating></floating>
   </div>
-  <floating></floating>
 </template>
 
 <style lang="scss" scoped></style>

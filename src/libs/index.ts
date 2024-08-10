@@ -1,5 +1,7 @@
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
+export { confirm } from './m-confirm/index'
+export { message } from './m-message'
 
 // 自动注册自定义组件，但是没有类型支持
 // 使用unpluging-vue-component插件进行自动注册

@@ -83,10 +83,10 @@ const onItemClick = (item: CategoryDataType) => {
         {{ item.name }}
       </li>
     </ul>
+    <m-popup v-model="showPopup">
+      <MenuVue @on-item-click="onItemClick" />
+    </m-popup>
   </div>
-  <m-popup v-model="showPopup">
-    <MenuVue @on-item-click="onItemClick" />
-  </m-popup>
 </template>
 
 <style lang="scss" scoped></style>

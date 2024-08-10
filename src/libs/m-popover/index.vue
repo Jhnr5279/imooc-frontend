@@ -112,7 +112,7 @@ watch(isShow, (val) => {
       <div
         v-if="isShow"
         ref="contentTarget"
-        class="absolute p-1 bg-white dark:bg-zinc-900 dark:border-zinc-700 dark:hover:shadow-zinc-700 border rounded hover:shadow-md duration-200 z-20"
+        class="absolute bg-white dark:bg-zinc-900 dark:border-zinc-700 dark:hover:shadow-zinc-700 border rounded hover:shadow-md duration-200 z-20"
         :style="contentStyle"
       >
         <!-- 匿名插槽 -->

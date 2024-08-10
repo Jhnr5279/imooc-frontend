@@ -33,7 +33,7 @@ watch(
         <div
           v-if="isShow"
           v-bind="$attrs"
-          class="fixed bottom-0 left-0 bg-white dark:bg-zinc-800 w-screen rounded-t-lg z-30"
+          class="fixed bottom-0 left-0 bg-white dark:bg-zinc-800 w-screen rounded-t-md z-30"
         >
           <slot />
         </div>

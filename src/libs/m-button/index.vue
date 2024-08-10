@@ -98,7 +98,7 @@ const onClick = () => {
 </script>
 
 <template>
-  <div
+  <button
     class="text-sm text-center rounded duration-150 flex justify-center items-center cursor-pointer"
     :class="[
       typeEnum[type],
@@ -122,7 +122,7 @@ const onClick = () => {
       :fill-class="iconClass"
     ></m-svg-icon>
     <slot v-else />
-  </div>
+  </button>
 </template>
 
 <style lang="scss" scoped></style>

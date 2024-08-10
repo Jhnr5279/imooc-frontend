@@ -63,7 +63,6 @@ const onFocusHandler = () => {
  * 失去焦点
  */
 const onBlurHandler = () => {
-  isFocus.value = false
   emits(BLUR_EMIT)
 }
 
@@ -121,7 +120,7 @@ onClickOutside(containerTarget, () => {
       <div
         v-if="$slots.dropdown"
         v-show="isFocus"
-        class="max-h-[368px] w-full text-base overflow-auto bg-white absolute z-20 left-0 top-[58px] p-2 rounded border shadow-lg border-zinc-200 duration-200 hover:shadow-2xl dark:bg-zinc-900 dark:border-zinc-700 dark:hover:shadow-zinc-700"
+        class="max-h-[368px] w-full text-base overflow-auto bg-white absolute z-20 left-0 top-[58px] p-2 rounded border shadow-lg border-zinc-200 duration-200 hover:shadow-2xl dark:bg-zinc-800 dark:border-zinc-700 dark:hover:shadow-zinc-700 scrollbar-thin scrollbar-track-transparent xl:scrollbar-thumb-zinc-200 xl:dark:scrollbar-thumb-zinc-900 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-corner-transparent"
       >
         <slot name="dropdown" />
       </div>

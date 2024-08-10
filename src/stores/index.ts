@@ -9,3 +9,4 @@ export default pinia
 export * from './modules/navigationbar'
 export * from './modules/theme'
 export * from './modules/app'
+export * from './modules/user'

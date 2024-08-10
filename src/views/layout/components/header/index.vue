@@ -16,7 +16,7 @@ const onHomeClick = () => {
     <div class="flex items-center justify-center">
       <m-svg-icon
         name="logo"
-        class="w-4 h-4 mr-2 dark:fill-white cursor-pointer"
+        class="guide-home w-4 h-4 mr-2 dark:fill-white cursor-pointer"
         @click="onHomeClick"
       ></m-svg-icon>
       <header-search class="mr-1"></header-search>

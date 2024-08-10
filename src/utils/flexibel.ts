@@ -5,8 +5,16 @@ const { width } = useWindowSize()
 /**
  * 通过页面宽度判断设备是否为移动设备 (默认1280px)
  */
+// export const isMobileTerminal = computed(() => {
+//   return width.value < PC_DEVICE_WIDTH
+// })
+/**
+ * 判断当前是否为移动设备
+ */
 export const isMobileTerminal = computed(() => {
-  return width.value < PC_DEVICE_WIDTH
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  )
 })
 
 /**
